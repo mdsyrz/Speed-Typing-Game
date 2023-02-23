@@ -1,0 +1,105 @@
+body {
+    background-color: #ffffff;
+    color: black;
+    text-align: center;
+}
+
+.container {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.heading {
+    color: black;
+    font-family: 'Special Elite', cursive;
+    font-size: 80px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    padding-top: 50px;
+}
+
+.header {
+    align-items: center;
+    display: flex;
+}
+
+.timer,
+.accuracy,
+.highScore {
+    background-color: #000000;
+    box-shadow: rgb(95, 95, 95) 5px 8px 5px;
+    color: #ffffff;
+    height: 60px;
+    margin: 8px;
+    padding: 10px;
+    width: 110px;
+}
+
+.errors,
+.wpm {
+    background-color: #000000;
+    box-shadow: rgb(95, 95, 95) 5px 8px 5px;
+    color: #ffffff;
+    height: 60px;
+    margin: 8px;
+    padding: 10px;
+    width: 70px;
+}
+
+.headingLabel {
+    font-size: 0.6rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.acc,
+.errorsFound,
+.timing,
+.wpmData,
+.highscoreRecorded {
+    font-size: 3rem;
+}
+
+.text {
+    background-color: #ededed;
+    color: #000000;
+    font-size: 1.9rem;
+    margin: 10px;
+    padding: 20px;
+    width: 650px;
+    word-wrap: break-word;
+}
+
+
+.inputBox {
+    background-color: #000000;
+    box-shadow: rgb(95, 95, 95) 5px 8px 5px;
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: 600;
+    height: 40px;
+    margin: 15px;
+    padding: 20px;
+    text-align: center;
+    width: 650px;
+}
+
+.resetBtn {
+    background-color: #000000;
+    border: none;
+    box-shadow: rgb(95, 95, 95) 5px 8px 5px;
+    color: rgb(73, 222, 73);
+    display: none;
+    font-size: 1rem;
+    padding: 10px;
+}
+
+.incorrectChar {
+    color: red;
+    text-decoration: underline;
+}
+
+.correctChar {
+    color: rgb(73, 222, 73);
+}
