@@ -2,6 +2,8 @@
 
 ![Alt Text](https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif)
 
+## [Play Speed Typer](https://rizvan93.github.io/snake/index.html)
+
 ## 📋 Project Brief
 
 - Built with HTML, CSS and Javascript
