@@ -35,9 +35,11 @@
 - Utilize API for random word/quote generation
 
 ## 📌 Summary
-
-
-
+Overall, this project has allowed me to be able to have a better understanding on how various methods and functions work together.
+It gave me plenty of practice time to amend and troubleshoot various parts of the code during the development process.
+My biggest challenge faced would definitely be connecting the functions like startGame() and resetGame() with other parts of the code.
+Ngl, it was tough but i have to say it felt fulfilling when things start to fall into place by the end of the development process.
+Looking forward to working on more projects to improve my software developing skills further.
 
 ## 📑 References
 
