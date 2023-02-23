@@ -1,157 +1,223 @@
 // DOM elements
-const textEl = document.getElementById("text");
-const inputEl = document.getElementById("input");
-const timerEl = document.getElementById("timer");
-const scoreEl = document.getElementById("score");
-const accuracyEl = document.getElementById("accuracy");
-const highScoreEl = document.getElementById("high-score");
 const difficultyEl = document.getElementById("difficulty");
-const startButton = document.getElementById("start-button");
-const resetButton = document.getElementById("reset-button");
+let accDisplay = document.querySelector(".accuracy");
+let accValue = document.querySelector(".acc");
+let errorDisplay = document.querySelector(".errors");
+let errorValue = document.querySelector(".errorsFound");
+let highScoreValue = document.querySelector(".highscoreRecorded");
+let resButton = document.querySelector(".resetBtn");
+let timerValue = document.querySelector(".timing");
+let userInput = document.querySelector(".inputBox");
+let wordsValue = document.querySelector(".text");
+let wpmDisplay = document.querySelector(".wpm");
+let wpmValue = document.querySelector(".wpmData");
 
-// Initialize
-let currentScore = 0;
+//Initialize
+let accuracy = 0;
+let characterTyped = 0;
+let countdownTimer = 60;
+let currentText = "";
+let errors = 0;
+let textLength = 0;
+let timeElapsed = 0;
+let timeLeft = countdownTimer;
+let timer = null;
+let totalErrors = 0;
+
 //Set highScore or display 0 if does not exist
-let highScore = localStorage.getItem('highScore') || 0;
-let startTime;
-let endTime;
-let timeInterval;
-let currentText;
-let difficulty = difficultyEl.value;
-let timeLimit = 60;
+let highScore = localStorage.getItem("highScore") || 0;
 
 // Event listener for difficulty change
-difficultyEl.addEventListener('change', function() {
+difficultyEl.addEventListener("change", function () {
   difficulty = this.value;
-  resetGame();
-});
 
-// Event listener for user input
-inputEl.addEventListener('input', function() {
-  // Get user input and current text to type
-  const inputText = this.value;
-  const textToType = textEl.innerText;
-
-  // Check if user has typed the entire text
-  if (inputText === textToType) {
-
-      currentText = generateRandomText(difficulty);
-      textEl.innerText = currentText;
-      inputEl.value = "";
-    // Calculate score and accuracy
-    // Convert milliseconds to seconds - /1000
-    const elapsedTime = (endTime - startTime) / 1000;
-    const wordsPerMinute = Math.round((textToType.split(' ').length / elapsedTime) * 60);
-    const accuracy = Math.round((inputText.length / textToType.length) * 100);
-
-    // Update current score and high score
-    currentScore++
-    
-    if (currentScore > highScore) {
-      highScore = currentScore;
-      localStorage.setItem('highScore', highScore);
-    } else {
-      highScore = 0;
-    }
-
-    // Update UI
-    scoreEl.innerText = currentScore;
-    accuracyEl.innerText = accuracy + '%';
-    highScoreEl.innerText = highScore;
-
-  }
-});
-
-// Function to start game
-function startGame() {
-
-  //Generate random word
-  currentText = generateRandomText(difficulty);
-  textEl.innerText = currentText;
-  inputEl.value = '';
-
-  //Start timer
-  startTime = Date.now();
-  endTime = startTime + timeLimit * 1000;
-  timeInterval = setInterval(updateTimer, 10);
-}
-
-// Function to reset game
-function resetGame() {
-  clearInterval(timeInterval);
-  timerEl.innerText = '0';
-  scoreEl.innerText = '0';
-}
-
-// Function to update timer
-function updateTimer() {
-  const timeLeft = (endTime - Date.now()) / 1000;
-  //Time runs out
-  if (timeLeft <= 0) {
-    clearInterval(timeInterval);
-    scoreEl.innerText = currentScore;
-    resetButton.style.display = 'block';
-    timerEl.innerHTML = "Game Over";
-  } else {
-    timerEl.innerText = timeLeft.toFixed(2);
-  }
-}
-
-// Function to generate random text
-function generateRandomText(difficulty) {
-  let text = "";
-  let timeLimit = 3;
+  // Difficulty options - Time reduction
   if (difficulty === "easy") {
-    const words = [
-      "hello",
-      "world",
-      "easy",
-      "game",
-      "fun"];
-
-    //Iterate through arrayf
-    for (let i = 0; i < 1; i++) {
-      const randomIndex = Math.floor(Math.random() * words.length);
-      
-      //Append random word from 'words' into 'text
-      text += words[randomIndex] + " ";
-    }
+    countdownTimer = 60;
+    countdownTimer.textContent = "60";
+    updateTimer;
   } else if (difficulty === "medium") {
-    const words = [
-      "coding",
-      "javascript",
-      "computer",
-      "program",
-      "learning",
-      "design",
-    ];
-    for (let i = 0; i < 5; i++) {
-      const randomIndex = Math.floor(Math.random() * words.length);
-      text += words[randomIndex] + " ";
-    }
+    countdownTimer = 55;
+    countdownTimer.textContent = "55";
   } else if (difficulty === "hard") {
-    const words = [
-      "algorithm",
-      "performance",
-      "optimization",
-      "framework",
-      "architecture",
-      "database",
-    ];
-    for (let i = 0; i < 10; i++) {
-      const randomIndex = Math.floor(Math.random() * words.length);
-      text += words[randomIndex] + " ";
-    }
+    countdownTimer = 50;
+    countdownTimer.textContent = "50";
   }
 
-  return text;
+  resetGame();
+
+  // Prevent timer from running immediately after changing difficulty
+  clearInterval(timer);
+});
+
+// Random tongue twister library
+let randomText = [
+  "she sells seashells by the seashore",
+  "fred fed ted bread and ted fed fred bread",
+  "peter piper picked a peck of pickled peppers",
+  "i saw a kitten eating chicken in the kitchen",
+  "if a dog chews shoes whose shoes does he choose",
+  "round and round the rugged rocks the ragged rascal ran",
+  "give papa a cup of proper coffee in a copper coffee cup",
+  "how much wood would a woodchuck chuck if a woodchuck could chuck wood",
+];
+//Generate random tongue twister text
+function generateRandomText() {
+  wordsValue.textContent = null;
+  currentText = randomText[textLength];
+
+  // Split array of char -> Iterate over each char in array
+  // -> Create new span element for each char -> Set innerText
+  // -> Append each span element -> Display
+  currentText.split("").forEach((char) => {
+    const charSpan = document.createElement("span");
+    charSpan.innerText = char;
+    wordsValue.appendChild(charSpan);
+  });
+
+  // Loop through randomText array
+  if (textLength < randomText.length - 1) {
+    textLength++;
+  } else {
+    textLength = 0;
+  }
 }
 
-// Event listener for start & reset button
-startButton.addEventListener('click', function () {
-  startGame();
-});
+function detectUserInput() {
+  // Fetch current input text and split it
+  curr_input = userInput.value;
+  curr_input_array = curr_input.split("");
 
-resetButton.addEventListener('click', function () {
+  //To detect characters typed by incrementing it
+  characterTyped++;
+
+  errors = 0;
+
+  // WPM formula
+  wpm = Math.round((characterTyped / 5 / timeElapsed) * 60);
+
+  // Update WPM
+  wpmValue.textContent = wpm;
+
+  // Check if user input is right or wrong
+  quoteSpanArray = wordsValue.querySelectorAll("span");
+  quoteSpanArray.forEach((char, index) => {
+    let typedChar = curr_input_array[index];
+
+    // No user input
+    if (typedChar == null) {
+      char.classList.remove("correctChar");
+      char.classList.remove("incorrectChar");
+
+      // User inputs correctly
+    } else if (typedChar === char.innerText) {
+      char.classList.add("correctChar");
+      char.classList.remove("incorrectChar");
+
+      // User inputs incorrectly
+    } else {
+      char.classList.add("incorrectChar");
+      char.classList.remove("correctChar");
+
+      // Error value increases after each incorrect char detected
+      errors++;
+    }
+  });
+
+  // Display number of errors
+  errorValue.textContent = totalErrors + errors;
+
+  // Update accuracy
+  let correctCharacters = characterTyped - (totalErrors + errors);
+  let accuracyVal = (correctCharacters / characterTyped) * 100;
+  accValue.textContent = Math.round(accuracyVal) + "%";
+
+  // Current text typed out fully - irrespective of errors
+  if (curr_input.length == currentText.length) {
+    generateRandomText();
+
+    // Update total errors
+    totalErrors += errors;
+
+    //Update current score
+    if (wpm > highScore) {
+      highScore = wpm;
+      localStorage.setItem("highScore", highScore);
+    } else {
+      highScoreValue.textContent = highScore;
+    }
+
+    // Clear user input
+    userInput.value = "";
+  }
+}
+
+// Timer
+function updateTimer() {
+  if (timeLeft > 0) {
+    // Decrease time
+    timeLeft--;
+
+    // Total time taken
+    timeElapsed++;
+
+    // Update time left
+    timerValue.textContent = timeLeft;
+  } else {
+    finishGame();
+  }
+}
+
+// Timer runs out
+function finishGame() {
+  // Stop timer
+  clearInterval(timer);
+
+  // Display Game Over
+  wordsValue.textContent = "GAME OVER";
+
+  // Display restart button
+  resButton.style.display = "block";
+
+  // Update WPM value
+  wpmValue.textContent = wpm;
+
+  // Display wpm
+  wpmDisplay.style.display = "block";
+
+  // Clear and hide input box
+  userInput.value = "";
+  userInput.style.display = "none";
+}
+
+// Start Game
+function startGame() {
   resetGame();
-});
+  generateRandomText();
+
+  // Reset time
+  clearInterval(timer);
+  timer = setInterval(updateTimer, 1000);
+}
+
+// Reset Game
+function resetGame() {
+  accValue.textContent = 0 + "%";
+  accuracy = 0;
+  characterTyped = 0;
+  errorValue.textContent = 0;
+  errors = 0;
+  highScoreValue.textContent = highScore;
+  resButton.style.display = "none";
+  textLength = 0;
+  timeElapsed = 0;
+  timeLeft = countdownTimer;
+  timerValue.textContent = timeLeft;
+  totalErrors = 0;
+  userInput.disabled = false;
+  userInput.style.display = "block";
+  userInput.value = "";
+  wordsValue.textContent =
+    "⬇ Place cursor in the box below to start the game ⬇";
+  wpmValue.textContent = 0;
+}

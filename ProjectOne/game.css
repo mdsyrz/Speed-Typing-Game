@@ -1,81 +1,105 @@
 body {
-    font-family: Georgia, sans-serif;
-    background-color: #F2F2F2;
-    color: #333;
+    background-color: #ffffff;
+    color: black;
+    text-align: center;
 }
 
-header {
-    background-color: #333;
-    color: #FFF;
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
+.container {
     align-items: center;
-}
-
-header h1 {
-    margin: 0;
-}
-
-#difficulty {
-    margin-left: 10px;
-    font-size: 16px;
-}
-
-main {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 50px;
 }
 
-#text-container {
-    text-align: center;
+.heading {
+    color: black;
+    font-family: 'Special Elite', cursive;
+    font-size: 80px;
     margin-bottom: 20px;
+    padding-bottom: 10px;
+    padding-top: 50px;
 }
 
-#text {
-    font-size: 24px;
-    line-height: 1.5;
-}
-
-#input {
-    font-size: 24px;
-    margin-bottom: 100px;
-    text-align: center;
-}
-
-#stats-container {
+.header {
+    align-items: center;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 20px;
 }
 
-.stat {
+.timer,
+.accuracy,
+.highScore {
+    background-color: #000000;
+    box-shadow: rgb(95, 95, 95) 5px 8px 5px;
+    color: #ffffff;
+    height: 60px;
+    margin: 8px;
+    padding: 10px;
+    width: 110px;
+}
+
+.errors,
+.wpm {
+    background-color: #000000;
+    box-shadow: rgb(95, 95, 95) 5px 8px 5px;
+    color: #ffffff;
+    height: 60px;
+    margin: 8px;
+    padding: 10px;
+    width: 70px;
+}
+
+.headingLabel {
+    font-size: 0.6rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.acc,
+.errorsFound,
+.timing,
+.wpmData,
+.highscoreRecorded {
+    font-size: 3rem;
+}
+
+.text {
+    background-color: #ededed;
+    color: #000000;
+    font-size: 1.9rem;
+    margin: 10px;
+    padding: 20px;
+    width: 650px;
+    word-wrap: break-word;
+}
+
+
+.inputBox {
+    background-color: #000000;
+    box-shadow: rgb(95, 95, 95) 5px 8px 5px;
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: 600;
+    height: 40px;
+    margin: 15px;
+    padding: 20px;
     text-align: center;
+    width: 650px;
 }
 
-.stat p:first-child {
-    font-weight: bold;
-}
-
-#reset-button {
+.resetBtn {
+    background-color: #000000;
+    border: none;
+    box-shadow: rgb(95, 95, 95) 5px 8px 5px;
+    color: rgb(73, 222, 73);
+    display: none;
+    font-size: 1rem;
     padding: 10px;
-    border:0cap;
-    background-color: #333;
-    color: #FFF;
-    font-size: 16px;
-    cursor: pointer;
 }
 
-#start-button {
-    padding: 10px;
-    border:0cap;
-    background-color: #333;
-    color: #FFF;
-    font-size: 16px;
-    cursor: pointer;
+.incorrectChar {
+    color: red;
+    text-decoration: underline;
+}
+
+.correctChar {
+    color: rgb(73, 222, 73);
 }

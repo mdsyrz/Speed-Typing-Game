@@ -2,20 +2,17 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flash Typer</title>
+    <link rel="stylesheet" href="game.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
 
-    <title>Speed Typing Game</title>
-    <link rel="stylesheet" href="styles.css">
-    <script defer src="main.js"></script>
+    <script defer src="game.js"></script>
 </head>
 
 <body>
-    <header>
-        <h1>Speed Typing Game</h1>
-
-        <!-- Difficulty Level -->
+    <div class="container">
         <div>
             <label for="difficulty">Difficulty:</label>
             <select name="difficulty" id="difficulty">
@@ -24,38 +21,35 @@
                 <option value="hard">Hard</option>
             </select>
         </div>
-    </header>
-    <main>
-        <div id="text-container">
-            <p id="text"></p>
-        </div>
-
-        <!-- Input box -->
-        <input type="text" id="input" placeholder="Start typing...">
-
-        <!-- Timer & Stats -->
-        <div id="stats-container">
-            <div class="stat">
-                <p>Time</p>
-                <p id="timer">0:00</p>
+        <div class="heading">Speed Typer</div>
+        <div class="header">
+            <div class="accuracy">
+                <div class="headingLabel">ACCURACY</div>
+                <div class="acc"></div>
             </div>
-            <div class="stat">
-                <p>Current Score</p>
-                <p id="score">0</p>
+            <div class="errors">
+                <div class="headingLabel">Errors</div>
+                <div class="errorsFound"></div>
             </div>
-            <div class="stat">
-                <p>Accuracy</p>
-                <p id="accuracy">0%</p>
+            <div class="timer">
+                <div class="headingLabel">Time</div>
+                <div class="timing"></div>
             </div>
-            <div class="stat">
-                <p>High Score</p>
-                <p id="high-score">0</p>
+            <div class="wpm">
+                <div class="headingLabel">WPM</div>
+                <div class="wpmData"></div>
+            </div>
+            <div class="highScore">
+                <div class="headingLabel">High Score (WPM)</div>
+                <div class="highscoreRecorded"></div>
             </div>
         </div>
 
-        <!-- Reset button -->
-        <button id="reset-button">Reset</button>
-    </main>
+        <div class="text">⬇ Place cursor in the box below to start the game ⬇</div>
+        <textarea class="inputBox" placeholder="<Input Text here>" oninput="detectUserInput()"
+            onfocus="startGame()"></textarea>
+
+        <button class="resetBtn" onclick="resetGame()">Reset</button>
+    </div>
 </body>
-
 </html>
