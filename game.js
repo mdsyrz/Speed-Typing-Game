@@ -34,7 +34,6 @@ difficultyEl.addEventListener("change", function () {
   if (difficulty === "easy") {
     countdownTimer = 60;
     countdownTimer.textContent = "60";
-    updateTimer;
   } else if (difficulty === "medium") {
     countdownTimer = 55;
     countdownTimer.textContent = "55";
@@ -50,7 +49,7 @@ difficultyEl.addEventListener("change", function () {
 });
 
 // Random tongue twister library
-let randomText = [
+let twisterText = [
   "she sells seashells by the seashore",
   "fred fed ted bread and ted fed fred bread",
   "peter piper picked a peck of pickled peppers",
@@ -61,11 +60,10 @@ let randomText = [
   "how much wood would a woodchuck chuck if a woodchuck could chuck wood",
 ];
 
-//Generate random tongue twister text
-function generateRandomText() {
+//Generate tongue twister text
+function generateText() {
   wordsValue.textContent = null;
-  currentText = randomText[textLength];
-
+  currentText = twisterText[textLength];
   // Split array of char -> Iterate over each char in array
   // -> Create new span element for each char -> Set innerText
   // -> Append each span element -> Display
@@ -75,8 +73,7 @@ function generateRandomText() {
     wordsValue.appendChild(charSpan);
   });
 
-  // Loop through randomText array
-  if (textLength < randomText.length - 1) {
+  if (textLength < twisterText.length - 1) {
     textLength++;
   } else {
     textLength = 0;
@@ -87,15 +84,12 @@ function detectUserInput() {
   // Fetch current input text and split it
   curr_input = userInput.value;
   curr_input_array = curr_input.split("");
-
   //To detect characters typed by incrementing it
   characterTyped++;
-
   errors = 0;
 
   // WPM formula
   wpm = Math.round((characterTyped / 5 / timeElapsed) * 60);
-
   // Update WPM
   wpmValue.textContent = wpm;
 
@@ -134,20 +128,11 @@ function detectUserInput() {
 
   // Current text typed out fully - irrespective of errors
   if (curr_input.length == currentText.length) {
-    generateRandomText();
+    generateText();
 
     // Update total errors
     totalErrors += errors;
-
-    //Store high-score
-    if (highScore !== 0) {
-      if (wpm > highScore) {
-        highScore = wpm;
-        localStorage.setItem("highScore", wpm);
-      } else {
-        highScoreValue.textContent = highScore;
-      }
-    }
+   
     // Clear user input
     userInput.value = "";
   }
@@ -183,8 +168,15 @@ function finishGame() {
   // Update WPM value
   wpmValue.textContent = wpm;
 
-  // Update highscore
-  highScoreValue.textContent = highScore;
+  //Store and display high-score
+  if (highScore !== 0) {
+    if (wpm > highScore) {
+      highScore = wpm;
+      localStorage.setItem("highScore", wpm);
+    } else {
+      highScoreValue.textContent = highScore;
+    }
+  }
 
   // Display wpm
   wpmDisplay.style.display = "block";
@@ -197,7 +189,7 @@ function finishGame() {
 // Start Game
 function startGame() {
   resetGame();
-  generateRandomText();
+  generateText();
 
   // Reset time
   clearInterval(timer);
