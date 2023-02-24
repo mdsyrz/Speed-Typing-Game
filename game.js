@@ -18,14 +18,13 @@ let characterTyped = 0;
 let countdownTimer = 60;
 let currentText = "";
 let errors = 0;
+let wpm = 0;
+let highScore = localStorage.getItem("highScore");
 let textLength = 0;
 let timeElapsed = 0;
 let timeLeft = countdownTimer;
 let timer = null;
 let totalErrors = 0;
-
-//Set highScore or display 0 if does not exist
-let highScore = localStorage.getItem("highScore") || 0;
 
 // Event listener for difficulty change
 difficultyEl.addEventListener("change", function () {
@@ -61,6 +60,7 @@ let randomText = [
   "give papa a cup of proper coffee in a copper coffee cup",
   "how much wood would a woodchuck chuck if a woodchuck could chuck wood",
 ];
+
 //Generate random tongue twister text
 function generateRandomText() {
   wordsValue.textContent = null;
@@ -139,14 +139,15 @@ function detectUserInput() {
     // Update total errors
     totalErrors += errors;
 
-    //Update current score
-    if (wpm > highScore) {
-      highScore = wpm;
-      localStorage.setItem("highScore", highScore);
-    } else {
-      highScoreValue.textContent = highScore;
+    //Store high-score
+    if (highScore !== 0) {
+      if (wpm > highScore) {
+        highScore = wpm;
+        localStorage.setItem("highScore", wpm);
+      } else {
+        highScoreValue.textContent = highScore;
+      }
     }
-
     // Clear user input
     userInput.value = "";
   }
@@ -181,6 +182,9 @@ function finishGame() {
 
   // Update WPM value
   wpmValue.textContent = wpm;
+
+  // Update highscore
+  highScoreValue.textContent = highScore;
 
   // Display wpm
   wpmDisplay.style.display = "block";
@@ -217,7 +221,6 @@ function resetGame() {
   userInput.disabled = false;
   userInput.style.display = "block";
   userInput.value = "";
-  wordsValue.textContent =
-    "⬇ Place cursor in the box below to start the game ⬇";
+  wordsValue.textContent = "⬇ Click the box to start ⬇";
   wpmValue.textContent = 0;
 }
