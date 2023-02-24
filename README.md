@@ -2,7 +2,7 @@
 
 ## [Play Speed Typer](https://mdsyrz.github.io/Speed-Typing-Game/game.html)
 
-<p align="left"><img src=https://github.com/mdsyrz/Speed-Typing-Game/blob/738c23e67de3f66d4428cfd2d72ba0a938fd532a/Screenshot%202023-02-24%20at%205.57.35%20AM.png width="50%" height="50%">
+<p align="left"><img src=https://github.com/mdsyrz/Speed-Typing-Game/blob/e781c71e2ecf0e21b781c8e73081abaddbe2102d/Screenshot%202023-02-24%20at%204.08.37%20PM.png width="50%" height="50%">
 <img src=https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif width="32%" height="32%" align="right">
 </p>
 
